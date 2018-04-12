@@ -1,5 +1,5 @@
 /**
- * Created by Hanger on 2017/8/31.
+ * Created by Hanger on 2018/4/11.
  */
 (function(global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -36,7 +36,7 @@
         this.title = config.title || '' // 选择器标题，选填
         this.sureText = config.sureText || '确定' // 确定按钮文本，选填
         this.cancelText = config.cancelText || '取消' // 取消按钮文本，选填
-        this.a = config.a // 惯性滚动加速度（正数, 单位 px/(ms * ms)），选填，默认 0.001
+        this.a = config.a || 0.001 // 惯性滚动加速度（正数, 单位 px/(ms * ms)），选填，默认 0.001
         this.style = config.style // 选择器样式, 选填
         this.initTab() // 初始化标签
         this.initUI() // 初始化UI
@@ -129,9 +129,9 @@
             this.wrap.classList.add('hg-picker-bg')
         },
         /**
-         * 获取每列关联数据中需要被展示的数据
+         * 获取需要被展示的数据
          * Return : Array
-         * Explain : @arr 需要被取值的对象数组
+         * Explain : @arr 需要被取值的数组
          */
         getValue: function(arr) {
             var tempArr = []
@@ -142,7 +142,7 @@
             return tempArr
         },
         /**
-         * 渲染地区选择器的内容
+         * 渲染并列选择器的内容
          */
         renderContent: function() {
             if (this.style && this.style.btnLocation === 'bottom') {
@@ -292,7 +292,7 @@
             }
         },
         /**
-         * 地区选择器触摸事件
+         * 并列选择器触摸事件
          * Explain : @i 需要处理的列的索引
          */
         touch: function(i) {
@@ -346,9 +346,8 @@
          * @a 加速度（正数, 单位 px/(ms * ms)）
          */
         calculateBuffer: function (v, a) {
-            var a2 = a || 0.001;
-            if (Math.abs(v) > 0.25) return (v / Math.abs(v)) * (0.5 * v * v / a2)
-            else return 0
+            if (Math.abs(v) < 0.25) return 0
+            else return (v / Math.abs(v)) * (0.5 * v * v / a)
         },
         /**
          * 固定 ul 最终的位置、更新视图
