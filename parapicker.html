@@ -76,6 +76,10 @@
         cancel: function () {
             console.log('取消选择');
         },
+        beforeShow: function () {
+          console.log('beforeSuccess回调触发了')  
+          return false
+        },
         success: function(arr) {
             console.log(arr);
             document.getElementById('para-input').innerHTML = arr;
