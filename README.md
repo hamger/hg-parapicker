@@ -83,7 +83,7 @@ data | Array\<Array\> | 符合格式的二维数组，必填
 valueKey | String | 需要展示的数据的键名，默认`value`
 success | Function  | 确定后的回调函数，返回一个结果数组，必填
 cancel | Function  | 点击取消按钮或者背景后的回调函数，选填
-beforeShow | Function | 规定选择框呼起前的逻辑，`return true`可以禁止选择框呼起 
+beforeShow | Function | 规定选择框呼起前的逻辑，`return true`可以禁止选择框呼起，选填
 title | String | 选择器标题，默认为空
 sureText | String | 确定按钮文本，默认为“确定”
 cancelText | String | 取消按钮文本，默认为“取消”
@@ -109,7 +109,7 @@ lineColor | String | 选择器分隔线颜色
 
 ## Changelog
 ### 2018.6.15
-> v1.1.0 * 添加 boforeShow 配置项
+> v1.1.1 * 添加 boforeShow 配置项
 
 ### 2018.4.11
 > v1.0.0 * 创建并列选择器
