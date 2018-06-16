@@ -33,7 +33,7 @@
         this.childKey = config.childKey || 'child' // 子数据的键名，选填
         this.success = config.success // 确定按钮回调函数，必填
         this.cancel = config.cancel || null // 取消按钮回调函数，选填
-        this.beforeShow = config.beforeShow || function () {} // 规定呼起选择器前的逻辑，选填
+        this.beforeShow = config.beforeShow || null // 规定呼起选择器前的逻辑，选填
         this.title = config.title || '' // 选择器标题，选填
         this.sureText = config.sureText || '确定' // 确定按钮文本，选填
         this.cancelText = config.cancelText || '取消' // 取消按钮文本，选填
@@ -80,6 +80,7 @@
             this.content = this.wrapId + '-content' // 选择器选择区域ID
             this.abolish = this.wrapId + '-abolish' // 选择器取消按钮ID
             this.sure = this.wrapId + '-sure' // 选择器确定按钮ID
+            this.isSelect = true // 是否呼起选择框
         },
         /**
          * 定义初始化 UI 函数
@@ -99,7 +100,8 @@
             var container = $id(that.container)
             // 点击目标DOM元素显示选择器
             $id(that.inputId).addEventListener('click', function() {
-                if(!that.beforeShow()) that.show(wrap, container)
+                that.beforeShow && that.beforeShow()
+                if(that.isSelect) that.show(wrap, container)
             })
             // 点击确定按钮隐藏选择器并输出结果
             $id(that.sure).addEventListener('click', function() {
@@ -113,7 +115,7 @@
             })
             // 点击背景隐藏选择器
             wrap.addEventListener('click', function(e) {
-                if (e.target.id === that.wrapId) {
+                if (e.target.id === that.wrapId && wrap.classList.contains("hg-picker-bg-show")) {
                     that.cancel && that.cancel()
                     that.hide(wrap, container)
                 }
@@ -395,7 +397,13 @@
         hide: function(wrap, container) {
             wrap.classList.remove('hg-picker-bg-show')
             container.classList.remove('hg-picker-container-up')
-        }
+        },
+        /**
+         * 是否禁止呼起选择框
+         */
+        forbidSelect: function(status) {
+            this.isSelect = !status
+        },
     }
 
     return ParaPicker
