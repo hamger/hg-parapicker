@@ -1,6 +1,6 @@
 {
   "name": "hg-parapicker",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Hanger <2313303800@qq.com> (https://hamger.github.io)",
   "description": "Hanger‘s parapicker",
   "keywords": [
@@ -16,5 +16,5 @@
     "type": "git",
     "url": "https://github.com/hamger/hg-parapicker.git"
   },
-  "main": "dist/parapicker.min.js"
+  "main": "parapicker.js"
 }

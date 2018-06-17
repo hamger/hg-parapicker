@@ -17,8 +17,8 @@
 ## 快速使用
 首先引入文件
 ```html
-<link rel="stylesheet" type="text/css" href="./picker.min.css" />
-<script src="./parapicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./picker.css" />
+<script src="./parapicker.js"></script>
 ```
 实例化并列选择器`new ParaPicker(configuration)`
 ```js
@@ -33,7 +33,7 @@ var paraPicker = new ParaPicker({
 
 如果你使用构建工具，可以这样引入
 ```js
-import 'hg-parapicker/dist/picker.min.css';
+import 'hg-parapicker/picker.css';
 import ParaPicker from 'hg-parapicker';
 ```
 在`vue`中实例化插件，如果数据是请求来的，实例化写在请求成功后的回调中
@@ -115,6 +115,9 @@ function | param | description
 paraPicker.forbidSelect(status) | status: `true`/`false` | 是否禁用选择框，`true`表示禁用，`false`表示不禁用，禁用状态下 beforeShow 回调依然会执行
 
 ## Changelog
+### 2018.6.17
+> v1.2.1 * 删除压缩文件
+
 ### 2018.6.16
 > v1.2.0 * 添加实例方法 forbidSelect ，修复选择器隐藏时依然触发 cancel 回调的问题
 
