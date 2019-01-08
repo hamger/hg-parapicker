@@ -5,9 +5,7 @@
 移动端的并列选择器，适用于选择并列类型的数据。
 
 ## Demo
-![hg-parapicker png](http://olislpb6q.bkt.clouddn.com/hg-parapicker.png)
-
-[点击这里可跳转到演示页面](https://hamger.github.io/hg-parapicker/)，请在移动端打开或者使用浏览器移动端调试工具打开。
+[点击这里跳转到演示页面](https://hamger.github.io/hg-parapicker/)，请在移动端打开或者使用浏览器移动端调试工具打开。
 
 ## Install
 * npm下载：`npm install hg-parapicker`
