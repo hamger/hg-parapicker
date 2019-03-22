@@ -59,13 +59,15 @@
 
 <body>
     <article class="wraper">
-        <h3 class="title">paraPicker</h3>
-        <div class="inputDiv" id="para-input"/>选择身份和状态</div>
+        <h3 class="title">1号玩家</h3>
+        <div onclick="select(1)" class="inputDiv" id="para-input1"/>选择身份和状态</div>
+        <h3 class="title">2号玩家</h3>
+        <div onclick="select(2)" class="inputDiv" id="para-input2"/>选择身份和状态</div>
     </article>
     <script src="./parapicker.js"></script>
     <script>
-    new ParaPicker({
-        inputId: 'para-input',
+    var picker = new ParaPicker({
+        // inputId: 'para-input1',
         data: [
             ['平民', '狼人', '预言家', '女巫', '猎人', '白痴'],
             ['存活', '死亡', '吃刀', '票出', '吃毒', '中枪']
@@ -75,15 +77,20 @@
         cancel: function () {
             console.log('取消选择');
         },
-        beforeShow: function () {
-          console.log('beforeSuccess回调触发了')  
-          return false
-        },
+        // beforeShow: function (number) {
+        //     this.playerNumber = number
+        // },
         success: function(arr) {
             console.log(arr);
-            document.getElementById('para-input').innerHTML = arr;
+            console.log(this.playerNumber);
+            document.getElementById('para-input' + this.playerNumber).innerHTML = arr;
         }
     });
+
+    function select (number) {
+        picker.playerNumber = number
+        picker.show()
+    }
     </script>
 </body>
 
