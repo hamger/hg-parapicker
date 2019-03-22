@@ -95,10 +95,11 @@
       this.moveSpeed = []; // touchmove规定时间间隔下的平均速度
       this.abled = true; // 标识滚动是否进行中
       this.containerId = this.wrapId + "-container"; // 选择器容器ID
-      this.box = this.wrapId + "-box"; // 选择器按钮区域ID
-      this.content = this.wrapId + "-content"; // 选择器选择区域ID
-      this.abolish = this.wrapId + "-abolish"; // 选择器取消按钮ID
-      this.sure = this.wrapId + "-sure"; // 选择器确定按钮ID
+      this.boxId = this.wrapId + "-box"; // 选择器按钮区域ID
+      this.contentId = this.wrapId + "-content"; // 选择器选择区域ID
+      this.abolishId = this.wrapId + "-abolish"; // 选择器取消按钮ID
+      this.sureId = this.wrapId + "-sure"; // 选择器确定按钮ID
+      this.titleId = this.wrapId + "-title"; // 选择器确定按钮ID
       this.isSelect = true; // 是否呼起选择框
     },
     /**
@@ -175,22 +176,26 @@
         '<div class="hg-picker-btn-box" id="' +
         this.box +
         '">' +
-        this.title +
         '<div class="hg-picker-btn" id="' +
-        this.abolish +
+        this.abolishId +
         '">' +
         this.cancelText +
         "</div>" +
         '<div class="hg-picker-btn" id="' +
-        this.sure +
+        this.sureId +
         '">' +
         this.sureText +
         "</div>" +
+        '<span id="' +
+        this.titleId +
+        '" >' +
+        this.title +
+        "</span> " +
         "</div>";
 
       var contentHtml =
         '<div class="hg-picker-content" id="' +
-        this.content +
+        this.contentId +
         '">' +
         '<div class="hg-picker-up-shadow"></div>' +
         '<div class="hg-picker-down-shadow"></div>' +
@@ -232,10 +237,10 @@
       if (!this.style) return;
       var obj = this.style;
       var container = $id(this.containerId);
-      var content = $id(this.content);
+      var content = $id(this.contentId);
       var box = $id(this.box);
-      var sureBtn = $id(this.sure);
-      var cancelBtn = $id(this.abolish);
+      var sureBtn = $id(this.sureId);
+      var cancelBtn = $id(this.abolishId);
       var len = content.children.length;
       // 设置高度
       if (obj.liHeight !== 40) {
@@ -279,7 +284,7 @@
      * Explain : @i 需要处理的列的索引
      */
     renderUl: function(i) {
-      var parentNode = $id(this.content);
+      var parentNode = $id(this.contentId);
       var newUl = document.createElement("ul");
       newUl.setAttribute("id", this.wrapId + "-ul-" + i);
       parentNode.insertBefore(
@@ -450,19 +455,15 @@
       return arr;
     },
     /**
-         * 显示选择器
-         * Explain : @wrap 包裹层 DOM 元素
-            @container 内容层 Dom 元素
-         */
+     * 显示选择器
+     */
     show: function() {
       this.wrap.classList.add("hg-picker-bg-show");
       this.container.classList.add("hg-picker-container-up");
     },
     /**
-         * 隐藏选择器
-         * Explain : @wrap 包裹层 DOM 元素
-            @container 内容层 Dom 元素
-         */
+     * 隐藏选择器
+     */
     hide: function() {
       this.wrap.classList.remove("hg-picker-bg-show");
       this.container.classList.remove("hg-picker-container-up");
@@ -472,6 +473,12 @@
      */
     forbidSelect: function(status) {
       this.isSelect = !status;
+    },
+    /**
+     * 设置选择器标题
+     */
+    setTitle: function(text) {
+      $id(this.titleId).innerHTML = text
     }
   };
 
