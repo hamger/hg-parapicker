@@ -9,7 +9,7 @@
     : (global.ParaPicker = factory());
 })(this, function() {
   /**
-   * 生成 UUID (Universally Unique IDentifier, 全球唯一标识符)
+   * 生成 UUID (Universally Unique IDentifier, 通用唯一标识符)
    */
   function generateUUID() {
     var d = new Date().getTime();
@@ -72,7 +72,7 @@
      */
     initTab: function() {
       // 如果没有传入 inputId 使用 uuid 代替
-      this.wrapId = (this.inputId || generateUUID()) + "-wrap"; // 选择器外包裹元素ID
+      this.wrapId = generateUUID() + "-wrap"; // 选择器外包裹元素ID
       this.paraIndex = []; // 存放每列地址的索引
       this.ulCount = this.data.length; // 当前展示的列数
       this.liNum = []; // 每个ul有多少个可选li
@@ -478,7 +478,7 @@
      * 设置选择器标题
      */
     setTitle: function(text) {
-      $id(this.titleId).innerHTML = text
+      $id(this.titleId).innerHTML = text;
     }
   };
 
