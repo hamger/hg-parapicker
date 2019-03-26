@@ -133,7 +133,7 @@ var data = [
 | show()               | `--`                   | 呼起选择框（受 forbidSelect 限制）                                                      |
 | hide()               | `--`                   | 关闭选择框                                                                              |
 | setTitle(text)       | text: `String`         | 修改标题内容                                                                            |
-| forbidSelect(status) | status: `true`/`false` | 是否禁用选择框，`true`表示禁用，`false`表示不禁用，禁用状态下 beforeShow 回调依然会执行 |
+| forbidSelect(status) | status: `true`/`false` | 是否禁用选择框，`true`表示禁用，`false`表示不禁用（默认），禁用状态下 beforeShow 回调依然会执行 |
 
 ## Changelog
 
