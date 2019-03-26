@@ -128,16 +128,16 @@ var data = [
 
 ## 实例方法
 
-| function             | param                  | description                                                                             |
-| -------------------- | ---------------------- | --------------------------------------------------------------------------------------- |
-| show()               | `--`                   | 呼起选择框（受 forbidSelect 限制）                                                      |
-| hide()               | `--`                   | 关闭选择框                                                                              |
-| setTitle(text)       | text: `String`         | 修改标题内容                                                                            |
+| function             | param                  | description                                                                                     |
+| -------------------- | ---------------------- | ----------------------------------------------------------------------------------------------- |
+| show()               | `--`                   | 呼起选择框（受 forbidSelect 限制）                                                              |
+| hide()               | `--`                   | 关闭选择框                                                                                      |
+| setTitle(text)       | text: `String`         | 修改标题内容                                                                                    |
 | forbidSelect(status) | status: `true`/`false` | 是否禁用选择框，`true`表示禁用，`false`表示不禁用（默认），禁用状态下 beforeShow 回调依然会执行 |
 
 ## Todos
 
-[] v2.0.0 使用 ES6 进行项目重构，废弃 inputId 和 beforeShow 配置，废弃 forbidSelect 实例方法，采用更灵活的实例方法调用形式来使用选择器。
+- [ ] v2.0.0 使用 ES6 进行项目重构，废弃 inputId 和 beforeShow 配置，废弃 forbidSelect 实例方法，采用更灵活的实例方法调用形式来使用选择器。
 
 ## Changelog
 
