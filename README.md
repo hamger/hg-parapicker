@@ -139,7 +139,7 @@ var data = [
 
 ### 2019.3.26
 
-> v1.3.2 show 受 forbidSelect 限制
+> v1.3.3 show 受 forbidSelect 限制
 
 ### 2019.3.22
 
