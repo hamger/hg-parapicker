@@ -137,7 +137,7 @@ var data = [
 
 ## Todos
 
-- [ ] v2.0.0 使用 ES6 进行项目重构，废弃 inputId 和 beforeShow 配置，废弃 forbidSelect 实例方法，采用更灵活的实例方法调用形式来使用选择器。
+- [ ] **v2.0.0** 使用 ES6 进行项目重构，废弃 inputId 和 beforeShow 配置，废弃 forbidSelect 实例方法，采用更灵活的实例方法调用形式来使用选择器。
 
 ## Changelog
 
