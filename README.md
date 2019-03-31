@@ -11,8 +11,8 @@
 
 ## Install
 
-- npm 下载：`npm install hg-parapicker`
-- Github 下载：[下载地址](https://github.com/hamger/hg-parapicker)
+- yarn 下载：`yarn add hg-parapicker`
+- npm 下载：`npm install --save hg-parapicker`
 
 ## Usage
 
