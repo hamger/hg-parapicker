@@ -1,0 +1,15 @@
+sudo: false
+language: node_js
+node_js:
+  - "8"
+  - "6"
+before_install:
+  - export CODECOV_TOKEN="6a8bceb3-ad64-4552-b359-bcfa4a7df98b"
+cache:
+  yarn: true
+  directories:
+    - "node_modules"
+script:
+  - yarn lint
+  - yarn test -- --ci
+  - yarn codecov
