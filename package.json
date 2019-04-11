@@ -9,8 +9,6 @@
     "clean:commonjs": "rimraf lib",
     "clean:umd": "rimraf dist",
     "clean:esm": "rimraf esm",
-    "clean:exdist": "rimraf examples/dist",
-    "clean:coverage": "rimraf coverage",
     "clean": "npm-run-all clean:*",
     "build:commonjs": "cross-env BABEL_OUTPUT=commonjs babel src/ --out-dir lib/ --ignore **/__tests__,**/__mocks__",
     "build:esm": "babel src/ --out-dir esm/ --ignore **/__tests__,**/__mocks__",
@@ -19,9 +17,9 @@
     "lint": "eslint src",
     "precommit": "lint-staged",
     "codecov": "codecov",
-    "website": "run-s website:clean website:build",
-    "website:clean": "rimraf examples/dist",
-    "website:build": "cross-env NODE_ENV=production webpack",
+    "docs": "run-s docs:clean docs:build",
+    "docs:clean": "rimraf docs",
+    "docs:build": "cross-env NODE_ENV=production webpack",
     "tonpm": "npm version patch && npm publish"
   },
   "keywords": [
