@@ -27,3 +27,14 @@ export function setChildStyle(parent, key, val) {
     children[i].style[key] = val;
   }
 }
+
+/**
+ * 计算滚动缓冲距离
+ * Return : Number
+ * Explain : @v 速度（正负表示运动方向, 单位 px/ms）
+ * @a 加速度（正数, 单位 px/(ms * ms)）
+ */
+export function calculateBuffer(v, a) {
+  if (Math.abs(v) < 0.25) return 0;
+  return (v / Math.abs(v)) * ((0.5 * v * v) / a);
+}

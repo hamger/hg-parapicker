@@ -1,37 +1,26 @@
-import { setChildStyle, generateUUID, $id } from './utils';
+import { setChildStyle, generateUUID, $id, calculateBuffer } from './utils';
 import '../picker.css';
-/**
- * 创建选择器构造函数
- */
-function ParaPicker(config) {
-  this.inputId = config.inputId; // 目标DOM元素ID，选填
-  this.data = config.data; // json 数据，必填
-  this.valueKey = config.valueKey || 'value'; // 需要展示的数据的键名，选填
-  this.childKey = config.childKey || 'child'; // 子数据的键名，选填
-  this.success = config.success; // 确定按钮回调函数，必填
-  this.cancel = config.cancel || null; // 取消按钮回调函数，选填
-  this.beforeShow = config.beforeShow || null; // 规定呼起选择器前的逻辑，选填
-  this.title = config.title || ''; // 选择器标题，选填
-  this.sureText = config.sureText || '确定'; // 确定按钮文本，选填
-  this.cancelText = config.cancelText || '取消'; // 取消按钮文本，选填
-  this.a = config.a || 0.001; // 惯性滚动加速度（正数, 单位 px/(ms * ms)），选填，默认 0.001
-  this.style = config.style; // 选择器样式, 选填
-  this.initTab(); // 初始化标签
-  this.initUI(); // 初始化UI
-  this.initEvent(); // 初始化事件
-}
 
-/**
- * 定义构造函数的原型
- */
-ParaPicker.prototype = {
-  // 明确构造器指向
-  constructor: ParaPicker,
+export default class ParaPicker {
+  constructor(config) {
+    this.data = config.data; // json 数据，必填
+    this.valueKey = config.valueKey || 'value'; // 需要展示的数据的键名，选填
+    this.childKey = config.childKey || 'child'; // 子数据的键名，选填
+    this.success = config.success; // 确定按钮回调函数，必填
+    this.cancel = config.cancel || null; // 取消按钮回调函数，选填
+    this.title = config.title || ''; // 选择器标题，选填
+    this.sureText = config.sureText || '确定'; // 确定按钮文本，选填
+    this.cancelText = config.cancelText || '取消'; // 取消按钮文本，选填
+    this.a = config.a || 0.001; // 惯性滚动加速度（正数, 单位 px/(ms * ms)），选填，默认 0.001
+    this.style = config.style; // 选择器样式, 选填
+    this.initTab(); // 初始化标签
+    this.initUI(); // 初始化UI
+    this.initEvent(); // 初始化事件
+  }
   /**
    * 定义初始化标签函数
    */
   initTab() {
-    // 如果没有传入 inputId 使用 uuid 代替
     this.wrapId = `${generateUUID()}-wrap`; // 选择器外包裹元素ID
     this.paraIndex = []; // 存放每列地址的索引
     this.ulCount = this.data.length; // 当前展示的列数
@@ -58,8 +47,7 @@ ParaPicker.prototype = {
     this.abolishId = `${this.wrapId}-abolish`; // 选择器取消按钮ID
     this.sureId = `${this.wrapId}-sure`; // 选择器确定按钮ID
     this.titleId = `${this.wrapId}-title`; // 选择器确定按钮ID
-    this.isCanSelect = true; // 是否呼起选择框
-  },
+  }
   /**
    * 定义初始化 UI 函数
    */
@@ -68,38 +56,30 @@ ParaPicker.prototype = {
     this.createContainer();
     // 初始化选择器内容
     this.renderContent();
-  },
+  }
   /**
    * 定义初始化事件函数
    */
   initEvent() {
-    const that = this;
-    that.container = $id(that.containerId);
-    // 点击需绑定点击事件的元素显示选择器
-    if (that.inputId) {
-      $id(that.inputId).addEventListener('click', () => {
-        if (that.beforeShow) that.beforeShow();
-        that.show();
-      });
-    }
+    this.container = $id(this.containerId);
     // 点击确定按钮隐藏选择器并输出结果
-    $id(that.sure).addEventListener('click', () => {
-      that.success(that.getResult());
-      that.hide();
+    $id(this.sureId).addEventListener('click', () => {
+      this.success(this.getResult());
+      this.hide();
     });
     // 点击取消隐藏选择器
-    $id(that.abolish).addEventListener('click', () => {
-      if (that.cancel) that.cancel();
-      that.hide();
+    $id(this.abolishId).addEventListener('click', () => {
+      if (this.cancel) this.cancel();
+      this.hide();
     });
     // 点击背景隐藏选择器
-    that.wrap.addEventListener('click', e => {
-      if (e.target.id === that.wrapId && that.wrap.classList.contains('hg-picker-bg-show')) {
-        if (that.cancel) that.cancel();
-        that.hide();
+    this.wrap.addEventListener('click', e => {
+      if (e.target.id === this.wrapId && this.wrap.classList.contains('hg-picker-bg-show')) {
+        if (this.cancel) this.cancel();
+        this.hide();
       }
     });
-  },
+  }
   /**
    * 创建选择器外包裹元素
    */
@@ -109,7 +89,7 @@ ParaPicker.prototype = {
     document.body.appendChild(div);
     this.wrap = $id(this.wrapId);
     this.wrap.classList.add('hg-picker-bg');
-  },
+  }
   /**
    * 获取需要被展示的数据
    * Return : Array
@@ -122,13 +102,13 @@ ParaPicker.prototype = {
       else tempArr.push(arr[i]);
     }
     return tempArr;
-  },
+  }
   /**
    * 渲染并列选择器的内容
    */
   renderContent() {
     const btnHTML =
-      `<div class="hg-picker-btn-box" id="${this.box}">` +
+      `<div class="hg-picker-btn-box" id="${this.boxId}">` +
       `<div class="hg-picker-btn" id="${this.abolishId}">${this.cancelText}</div>` +
       `<div class="hg-picker-btn" id="${this.sureId}">${this.sureText}</div>` +
       `<span id="${this.titleId}" >${this.title}</span> ` +
@@ -160,7 +140,7 @@ ParaPicker.prototype = {
     }
     this.setStyle();
     this.setUlWidth();
-  },
+  }
   /**
    * 设置选择器样式
    */
@@ -169,7 +149,7 @@ ParaPicker.prototype = {
     const obj = this.style;
     const container = $id(this.containerId);
     const content = $id(this.contentId);
-    const box = $id(this.box);
+    const box = $id(this.boxId);
     const sureBtn = $id(this.sureId);
     const cancelBtn = $id(this.abolishId);
     const len = content.children.length;
@@ -205,7 +185,7 @@ ParaPicker.prototype = {
     if (obj.upShadowColor) content.children[len - 3].style.backgroundImage = obj.upShadowColor;
     if (obj.downShadowColor) content.children[len - 2].style.backgroundImage = obj.downShadowColor;
     if (obj.lineColor) content.children[len - 1].style.borderColor = obj.lineColor;
-  },
+  }
   /**
    * 渲染 ul 元素
    * Explain : @i 需要处理的列的索引
@@ -217,7 +197,7 @@ ParaPicker.prototype = {
     parentNode.insertBefore(newUl, parentNode.children[parentNode.children.length - 3]);
     this.paraUl[i] = $id(`${this.wrapId}-ul-${i}`);
     this.renderLi(i);
-  },
+  }
   /**
    * 渲染 li 元素
    * Explain : @i 需要处理的列的索引
@@ -231,7 +211,7 @@ ParaPicker.prototype = {
     lis += '<li></li><li></li>';
     this.paraUl[i].innerHTML = lis;
     if (this.liHeight !== 40) setChildStyle(this.paraUl[i], 'height', `${this.liHeight}px`);
-  },
+  }
   /**
    * 设置 ul 元素宽度
    */
@@ -239,35 +219,34 @@ ParaPicker.prototype = {
     for (let i = 0; i < this.ulCount; i++) {
       this.paraUl[i].style.width = `${(100 / this.ulCount).toFixed(2)}%`;
     }
-  },
+  }
   /**
    * 绑定滑动事件
    * Explain : @i 需要处理的列的索引
    */
   bindRoll(i) {
-    const that = this;
-    that.paraUl[i].addEventListener(
+    this.paraUl[i].addEventListener(
       'touchstart',
       () => {
-        that.touch(i);
+        this.touch(i);
       },
       false,
     );
-    that.paraUl[i].addEventListener(
+    this.paraUl[i].addEventListener(
       'touchmove',
       () => {
-        that.touch(i);
+        this.touch(i);
       },
       false,
     );
-    that.paraUl[i].addEventListener(
+    this.paraUl[i].addEventListener(
       'touchend',
       () => {
-        that.touch(i);
+        this.touch(i);
       },
       true,
     );
-  },
+  }
   /**
    * 控制列表的滚动
    * Explain : @i 需要处理的列的索引
@@ -282,7 +261,7 @@ ParaPicker.prototype = {
         this.paraUl[i].style.webkitTransition = `-webkit-transform ${time}s ease-out`;
       }
     }
-  },
+  }
   /**
    * 并列选择器触摸事件
    * Explain : @i 需要处理的列的索引
@@ -331,7 +310,7 @@ ParaPicker.prototype = {
         } else {
           speed = this.moveSpeed[this.moveSpeed.length - 1];
         }
-        this.curDis[i] = this.curDis[i] - this.calculateBuffer(speed, this.a);
+        this.curDis[i] = this.curDis[i] - calculateBuffer(speed, this.a);
         this.fixate(i);
         break;
       }
@@ -339,17 +318,7 @@ ParaPicker.prototype = {
         break;
       }
     }
-  },
-  /**
-   * 计算滚动缓冲距离
-   * Return : Number
-   * Explain : @v 速度（正负表示运动方向, 单位 px/ms）
-   * @a 加速度（正数, 单位 px/(ms * ms)）
-   */
-  calculateBuffer(v, a) {
-    if (Math.abs(v) < 0.25) return 0;
-    return (v / Math.abs(v)) * ((0.5 * v * v) / a);
-  },
+  }
   /**
    * 固定 ul 最终的位置、更新视图
    * Explain : @i 需要处理的列的索引
@@ -357,7 +326,7 @@ ParaPicker.prototype = {
   fixate(i) {
     this.getPosition(i);
     this.roll(i, 0.2);
-  },
+  }
   /**
    * 获取定位数据
    * Explain : @i 需要处理的列的索引
@@ -368,44 +337,34 @@ ParaPicker.prototype = {
     else if (this.curDis[i] >= 0) this.paraIndex[i] = 0;
     else this.paraIndex[i] = -1 * Math.round(this.curDis[i] / this.liHeight);
     this.curDis[i] = -1 * this.liHeight * this.paraIndex[i];
-  },
+  }
   /**
    * 获取结果的数组
    */
   getResult() {
-    const arr = [];
-    for (let i = 0; i < this.ulCount; i++) {
-      arr.push(this.data[i][this.paraIndex[i]]);
-    }
-    return arr;
-  },
+    return new Array(this.ulCount).fill(1).reduce((pre, cur, i) => {
+      pre.push(this.data[i][this.paraIndex[i]]);
+      return pre;
+    }, []);
+  }
   /**
    * 显示选择器
    */
   show() {
-    if (!this.isCanSelect) return;
     this.wrap.classList.add('hg-picker-bg-show');
     this.container.classList.add('hg-picker-container-up');
-  },
+  }
   /**
    * 隐藏选择器
    */
   hide() {
     this.wrap.classList.remove('hg-picker-bg-show');
     this.container.classList.remove('hg-picker-container-up');
-  },
-  /**
-   * 是否禁止呼起选择框
-   */
-  forbidSelect(status) {
-    this.isCanSelect = !status;
-  },
+  }
   /**
    * 设置选择器标题
    */
   setTitle(text) {
     $id(this.titleId).innerHTML = text;
-  },
-};
-
-export default ParaPicker;
+  }
+}
