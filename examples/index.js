@@ -1,4 +1,6 @@
 import ParaPicker from '@';
+// import ParaPicker from '../dist/hg-parapicker.js';
+// import '../dist/picker.css';
 
 const picker = new ParaPicker({
   data: [

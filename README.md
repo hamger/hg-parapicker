@@ -3,9 +3,7 @@
 ![build passed](https://img.shields.io/badge/build-passed-brightgreen.svg)
 ![licence MIT](https://img.shields.io/badge/licence-MIT-orange.svg)
 
-移动端的并列选择器（v2.x），适用于选择并列类型的数据。
-
-[1.x 文档](https://github.com/hamger/hg-parapicker/tree/v1.3.3)
+移动端的并列选择器，适用于选择并列类型的数据。
 
 ## Demo
 
@@ -15,14 +13,17 @@
 
 - yarn 下载：`yarn add hg-parapicker`
 - npm 下载：`npm install --save hg-parapicker`
+- CND 地址：
+  - js：`https://unpkg.com/hg-parapicker/dist/hg-parapicker.js`
+  - css：`https://unpkg.com/hg-parapicker/dist/picker.css`
 
 ## Usage
 
 首先引入文件
 
 ```html
-<link rel="stylesheet" type="text/css" href="./picker.css" />
-<script src="./parapicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/hg-parapicker/dist/hg-parapicker.css" />
+<script src="https://unpkg.com/hg-parapicker/dist/picker.js"></script>
 ```
 
 实例化并列选择器`new ParaPicker(configuration)`
@@ -37,10 +38,10 @@ var paraPicker = new ParaPicker({
 });
 ```
 
-如果你使用构建工具，可以这样引入
+如果你使用构建工具，这样引入
 
 ```js
-import "hg-parapicker/picker.css";
+import "hg-parapicker/dist/picker.css";
 import ParaPicker from "hg-parapicker";
 ```
 
@@ -105,9 +106,7 @@ var data = [
 | a          | Number         | 惯性滚动加速度（正数, 单位 px/(ms \* ms)），规定滚动阻力，加速度越小缓冲距离越长，默认 `0.001` |
 | style      | Object         | 包含样式配置的对象                                                                             |
 
-> 在多个元素共享一个选择器的情况，不需要针对每个元素 id 都实例化一个选择器，可以不填写 inputId，使用实例方法`show`来呼起选择器，使用`setTitle`来区别不同的元素。
-
-`style`对象可以接受如下选项（以下配置项若仍无法满足需求，可自行修改并引入`picker.css`）：
+`style`对象可以接受如下选项：
 
 | key             | value  | description                         |
 | --------------- | ------ | ----------------------------------- |
