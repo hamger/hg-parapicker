@@ -1,5 +1,4 @@
 import { setChildStyle, generateUUID, $id, calculateBuffer } from './utils';
-import './picker.css';
 
 export default class ParaPicker {
   constructor(config) {

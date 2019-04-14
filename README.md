@@ -5,6 +5,8 @@
 
 移动端的并列选择器，适用于选择并列类型的数据。
 
+这里是 2.x 的文档，1.x 文档点击[这里](https://github.com/hamger/hg-parapicker/tree/v1.3.3)。
+
 ## Demo
 
 [点击这里跳转到演示页面](https://hamger.github.io/hg-parapicker/)，请在移动端打开或者使用浏览器移动端调试工具打开。
@@ -15,15 +17,15 @@
 - npm 下载：`npm install --save hg-parapicker`
 - CND 地址：
   - js：`https://unpkg.com/hg-parapicker/dist/hg-parapicker.js`
-  - css：`https://unpkg.com/hg-parapicker/dist/picker.css`
+  - css：`https://unpkg.com/hg-parapicker/picker.css`
 
 ## Usage
 
 首先引入文件
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/hg-parapicker/dist/hg-parapicker.css" />
-<script src="https://unpkg.com/hg-parapicker/dist/picker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/hg-parapicker/picker.css" />
+<script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
 ```
 
 实例化并列选择器`new ParaPicker(configuration)`
@@ -41,25 +43,8 @@ var paraPicker = new ParaPicker({
 如果你使用构建工具，这样引入
 
 ```js
-import "hg-parapicker/dist/picker.css";
+import "hg-parapicker/picker.css";
 import ParaPicker from "hg-parapicker";
-```
-
-在`vue`中实例化插件，如果数据是请求来的，实例化写在请求成功后的回调中
-
-```js
-var paraPicker = null
-...
-mounted () {
-    this.$nextTick(() => {
-        paraPicker = new ParaPicker({
-            data: data,
-            success: function(arr) {
-                console.log(arr);
-            }
-        });
-    });
-}
 ```
 
 `data`选项接受一个二维数组，数据格式如下
@@ -88,6 +73,43 @@ var data = [
 
 ```js
 [{ value: "预言家", description: "每晚可查验一名玩家" }, "存活"];
+```
+
+调用实例方法 show 就可以呼起选择器，以下是完整调用：
+```html
+<head>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/hg-parapicker/picker.css" />
+</head>
+<body>
+    <article class="wraper">
+        <div>
+            <h3 class="title">1号玩家</h3>
+            <div onclick="select(1)" class="inputDiv" id="para-input1"/>选择身份和状态</div>
+        </div>
+        <div>
+            <h3 class="title">2号玩家</h3>
+            <div onclick="select(2)" class="inputDiv" id="para-input2"/>选择身份和状态</div>
+        </div>
+    </article>
+    <script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
+    <script>
+      const picker = new ParaPicker({
+        data: [
+          ['平民', '狼人', '预言家', '女巫', '猎人', '白痴'],
+          ['存活', '死亡', '吃刀', '票出', '吃毒', '中枪'],
+        ],
+        success(arr) {
+          document.getElementById(`para-input${this.playerNumber}`).innerHTML = arr;
+        },
+      });
+
+      window.select = number => {
+        picker.playerNumber = number;
+        picker.setTitle(`${number}号玩家`);
+        picker.show();
+      };
+    </script>
+</body>
 ```
 
 ## 配置项
