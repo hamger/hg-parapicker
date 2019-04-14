@@ -23,7 +23,7 @@ window.select = number => {
 };
 
 
-describe('withSlot', () => {
+describe('picker test', () => {
   beforeAll(() => {
     // eslint-disable-next-line no-console
     console.error = error => {
@@ -31,7 +31,7 @@ describe('withSlot', () => {
     };
   });
 
-  it('picker test', () => {
+  it('title', () => {
     expect(
       picker.title
     ).toBe('玩家属性');

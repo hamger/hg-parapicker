@@ -1,15 +1,11 @@
 sudo: false
 language: node_js
-node_js:
-  - "8"
-  - "6"
-before_install:
-  - export CODECOV_TOKEN="f467855e-3e4b-4920-bc74-c57fcde6466b"
+env:
+  - CODECOV_TOKEN=f467855e-3e4b-4920-bc74-c57fcde6466b
 cache:
-  yarn: true
+  npm: true
   directories:
     - "node_modules"
 script:
-  - yarn lint
-  - yarn test -- --ci
-  - yarn codecov
+  - npm test
+  - npm codecov
