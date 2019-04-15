@@ -1,6 +1,7 @@
 # hg-parapicker
 
 ![build](https://travis-ci.org/hamger/hg-parapicker.svg?branch=master)
+[![codecov](https://codecov.io/gh/hamger/hg-parapicker/branch/master/graph/badge.svg)](https://codecov.io/gh/hamger/hg-parapicker)
 ![NPM](https://img.shields.io/npm/l/hg-parapicker.svg?color=orange)
 [![npm](https://img.shields.io/npm/v/hg-parapicker.svg?color=blue)](https://www.npmjs.com/package/hg-parapicker)
 
