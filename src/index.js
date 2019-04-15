@@ -364,6 +364,7 @@ export default class ParaPicker {
    * 设置选择器标题
    */
   setTitle(text) {
-    $id(this.titleId).innerHTML = text;
+    this.title = text;
+    $id(this.titleId).innerHTML = this.title;
   }
 }

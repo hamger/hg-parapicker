@@ -2,7 +2,14 @@
 import ParaPicker from '../index';
 
 const data = [
-  ['平民', '狼人', '预言家', '女巫', '猎人', '白痴'],
+  [
+    { value: '预言家', description: '每晚可查验一名玩家' },
+    { value: '狼人', description: '每晚可击杀一名玩家' },
+    { value: '平民', description: 'xx' },
+    { value: '女巫', description: 'xx' },
+    { value: '猎人', description: 'xx' },
+    { value: '白痴', description: 'xx' },
+  ],
   ['存活', '死亡', '吃刀', '票出', '吃毒', '中枪'],
 ];
 
@@ -11,6 +18,7 @@ const picker = new ParaPicker({
   title: '玩家属性',
   style: {
     liHeight: 42,
+    btnHeight: 50,
     btnLocation: 'bottom',
     btnOffset: '22px',
     titleColor: 'red',
@@ -41,16 +49,21 @@ const picker2 = new ParaPicker({
 
 describe('picker test', () => {
   beforeAll(() => {
-    // eslint-disable-next-line no-console
     console.error = error => {
       throw new Error(error);
     };
   });
 
-  it('title', () => {
-    expect(picker.title).toBe('玩家属性');
+  it('picker', () => {
+    picker.show();
+    picker.hide();
+    picker.setTitle('1号玩家');
+    expect(picker.title).toBe('1号玩家');
   });
-  it('title2', () => {
-    expect(picker2.title).toBe('');
+  it('picker2', () => {
+    expect(picker2.getResult()).toEqual([
+      { value: '预言家', description: '每晚可查验一名玩家' },
+      '存活',
+    ]);
   });
 });
