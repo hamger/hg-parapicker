@@ -5,6 +5,8 @@
 
 移动端的并列选择器，适用于选择并列类型的数据。
 
+> 1.x 版本已经停止维护，建议使用 [2.x 版本](https://github.com/hamger/hg-parapicker/tree/master)
+
 ## Demo
 
 [点击这里跳转到演示页面](https://hamger.github.io/hg-parapicker/)，请在移动端打开或者使用浏览器移动端调试工具打开。
