@@ -4,13 +4,11 @@
   "author": "Hanger <2313303800@qq.com> (https://hamger.github.io)",
   "description": "a picker for paratactic data in the mobile terminal",
   "scripts": {
-    "start": "webpack-dev-server --hot --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --mode=development",
+    "build": "webpack --mode=production",
     "test": "cross-env BABEL_OUTPUT=commonjs jest",
-    "build": "webpack --config build/webpack.prod.conf.js",
     "lint": "eslint src",
     "precommit": "lint-staged",
-    "codecov": "codecov",
-    "docs": "cross-env NODE_ENV=production webpack --config build/webpack.dev.conf.js",
     "tonpm": "npm version patch && npm publish"
   },
   "keywords": [

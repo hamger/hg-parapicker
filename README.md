@@ -26,7 +26,11 @@
 首先引入文件
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/hg-parapicker/picker.css" />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://unpkg.com/hg-parapicker/picker.css"
+/>
 <script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
 ```
 
@@ -78,6 +82,7 @@ var data = [
 ```
 
 调用实例方法 show 就可以呼起选择器，以下是完整调用：
+
 ```html
 <head>
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/hg-parapicker/picker.css" />
@@ -95,17 +100,22 @@ var data = [
     </article>
     <script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
     <script>
-      const picker = new ParaPicker({
+      var picker = new ParaPicker({
         data: [
           ['平民', '狼人', '预言家', '女巫', '猎人', '白痴'],
           ['存活', '死亡', '吃刀', '票出', '吃毒', '中枪'],
         ],
+        title: '玩家属性',
+        cancel() {
+          console.log('取消选择');
+        },
         success(arr) {
-          document.getElementById(`para-input${this.playerNumber}`).innerHTML = arr;
+          console.log(arr);
+          document.getElementById('para-input' + this.playerNumber).innerHTML = arr;
         },
       });
 
-      window.select = number => {
+      function select(number) {
         picker.playerNumber = number;
         picker.setTitle(`${number}号玩家`);
         picker.show();
