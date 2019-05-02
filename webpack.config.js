@@ -10,6 +10,7 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       library: 'ParaPicker',
       libraryTarget: 'umd',
+      libraryExport: 'default',
     },
     devtool: argv.mode === 'production' ? false : 'cheap-module-eval-source-map',
     performance: {
