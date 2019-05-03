@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env, argv) => {
   const config = {
@@ -35,6 +36,10 @@ module.exports = (env, argv) => {
           ],
         },
         {
+          test: /\.css$/,
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        },
+        {
           test: /\.html$/,
           use: [
             {
@@ -63,6 +68,10 @@ module.exports = (env, argv) => {
         template: path.resolve(__dirname, './examples/index.html'),
       }),
       new webpack.HotModuleReplacementPlugin(),
+      new MiniCssExtractPlugin({
+        filename: '[name]-[hash].css',
+      }),
+      new webpack.optimize.ModuleConcatenationPlugin(),
     ]);
   }
 
