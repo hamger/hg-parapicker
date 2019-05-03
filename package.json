@@ -8,6 +8,7 @@
     "build": "webpack --mode=production",
     "test": "cross-env BABEL_OUTPUT=commonjs jest",
     "lint": "eslint src",
+    "codecov": "codecov",
     "precommit": "lint-staged",
     "tonpm": "npm version patch && npm publish"
   },
