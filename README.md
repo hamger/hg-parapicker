@@ -6,7 +6,7 @@
 
 移动端的并列选择器，适用于选择并列类型的数据。
 
-> 这里是 2.x 的文档，1.x 文档请点击[这里](https://github.com/hamger/hg-parapicker/tree/v1.3.3)。
+> 这里是 2.x 的文档，1.x 文档请点击[这里](https://github.com/hamger/hg-parapicker/tree/v1.x)。
 
 ## Demo
 
