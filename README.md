@@ -177,7 +177,7 @@ var data = [
 | set(obj) | obj:Object | 设置选择器属性 |
 | get(key) | key:String | 获取选择框属性 |
 
-> 参数 obj 中指定`title` `cancelText` `okText` `valueKey` `a` `onOk` `onCancel`属性的值，会修改对应的选择器配置
+> 参数 obj 中指定`title`、`cancelText`、`okText`、`valueKey`、`a`、`onOk`、`onCancel`的值，会修改对应的选择器配置
 
 ## Change Log
 
