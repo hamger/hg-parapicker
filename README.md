@@ -74,66 +74,13 @@ var data = [
 ]
 ```
 
-其中的键名`value`和可以根据实际需要通过配置项`valueKey`设置。例如你选择了`预言家-存活`，成功的回调函数中会接收如下形式的数组
+其中的键名`value`可以根据实际需要通过配置项`valueKey`设置。例如你选择了`预言家-存活`，成功的回调函数中会接收如下形式的数组
 
 ```js
 [{ value: "预言家", description: "每晚可查验一名玩家" }, "存活"];
 ```
 
-调用实例方法 show 就可以呼起选择器，以下是完整调用：
-
-```html
-<head>
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://unpkg.com/hg-parapicker/picker.css"
-  />
-</head>
-<body>
-  <article class="wraper">
-    <div>
-      <h3 class="title">1号玩家</h3>
-      <div onclick="select(1)" class="inputDiv" id="para-input1">
-        选择身份和状态
-      </div>
-    </div>
-    <div>
-      <h3 class="title">2号玩家</h3>
-      <div onclick="select(2)" class="inputDiv" id="para-input2">
-        选择身份和状态
-      </div>
-    </div>
-  </article>
-  <script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
-  <script>
-    var picker = new ParaPicker({
-      data: [
-        ["平民", "狼人", "预言家", "女巫", "猎人", "白痴"],
-        ["存活", "死亡", "吃刀", "票出", "吃毒", "中枪"]
-      ],
-      title: "玩家属性",
-      onCancel() {
-        console.log("取消选择");
-      },
-      onOk(arr) {
-        console.log(arr);
-        document.getElementById(
-          "para-input" + this.get("playerNumber")
-        ).innerHTML = arr;
-      }
-    });
-
-    function select(number) {
-      picker.set({
-        playerNumber: number,
-        title: `${number}号玩家`
-      });
-      picker.show();
-    }
-  </script>
-</body>
-```
+调用实例方法 show 呼起选择器，完整案例见[这里](https://github.com/hamger/hg-parapicker/blob/master/index.html)。
 
 ## 配置项
 
