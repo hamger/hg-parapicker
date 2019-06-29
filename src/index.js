@@ -1,17 +1,19 @@
 import { setChildStyle, generateUUID, $id, calculateBuffer } from './utils';
 
+const property = Symbol('property')
+
 export default class ParaPicker {
   constructor(config) {
     this.data = config.data; // json 数据，必填
-    this.valueKey = config.valueKey || 'value'; // 需要展示的数据的键名，选填
-    this.childKey = config.childKey || 'child'; // 子数据的键名，选填
-    this.success = config.success; // 确定按钮回调函数，必填
-    this.cancel = config.cancel || null; // 取消按钮回调函数，选填
+    this.valueKey = config.valueKey || 'value'; // 选项为对象的情况下，指定展示数据的键名，选填
+    this.onOk = config.onOk; // 确定按钮回调函数，必填
+    this.onCancel = config.onCancel || null; // 取消按钮回调函数，选填
     this.title = config.title || ''; // 选择器标题，选填
-    this.sureText = config.sureText || '确定'; // 确定按钮文本，选填
+    this.okText = config.okText || '确定'; // 确定按钮文本，选填
     this.cancelText = config.cancelText || '取消'; // 取消按钮文本，选填
     this.a = config.a || 0.001; // 惯性滚动加速度（正数, 单位 px/(ms * ms)），选填，默认 0.001
     this.style = config.style; // 选择器样式, 选填
+    this[property] = {} // 存放自定义的属性
     this.initTab(); // 初始化标签
     this.initUI(); // 初始化UI
     this.initEvent(); // 初始化事件
@@ -43,8 +45,8 @@ export default class ParaPicker {
     this.containerId = `${this.wrapId}-container`; // 选择器容器ID
     this.boxId = `${this.wrapId}-box`; // 选择器按钮区域ID
     this.contentId = `${this.wrapId}-content`; // 选择器选择区域ID
-    this.abolishId = `${this.wrapId}-abolish`; // 选择器取消按钮ID
-    this.sureId = `${this.wrapId}-sure`; // 选择器确定按钮ID
+    this.cancelId = `${this.wrapId}-cancel`; // 选择器取消按钮ID
+    this.okId = `${this.wrapId}-ok`; // 选择器确定按钮ID
     this.titleId = `${this.wrapId}-title`; // 选择器确定按钮ID
   }
   /**
@@ -62,19 +64,19 @@ export default class ParaPicker {
   initEvent() {
     this.container = $id(this.containerId);
     // 点击确定按钮隐藏选择器并输出结果
-    $id(this.sureId).addEventListener('click', () => {
-      this.success(this.getResult());
+    $id(this.okId).addEventListener('click', () => {
+      this.onOk(this.getResult());
       this.hide();
     });
     // 点击取消隐藏选择器
-    $id(this.abolishId).addEventListener('click', () => {
-      if (this.cancel) this.cancel();
+    $id(this.cancelId).addEventListener('click', () => {
+      if (this.onCancel) this.onCancel();
       this.hide();
     });
     // 点击背景隐藏选择器
     this.wrap.addEventListener('click', e => {
       if (e.target.id === this.wrapId && this.wrap.classList.contains('hg-picker-bg-show')) {
-        if (this.cancel) this.cancel();
+        if (this.onCancel) this.onCancel();
         this.hide();
       }
     });
@@ -108,8 +110,8 @@ export default class ParaPicker {
   renderContent() {
     const btnHTML =
       `<div class="hg-picker-btn-box" id="${this.boxId}">` +
-      `<div class="hg-picker-btn" id="${this.abolishId}">${this.cancelText}</div>` +
-      `<div class="hg-picker-btn" id="${this.sureId}">${this.sureText}</div>` +
+      `<div class="hg-picker-btn" id="${this.cancelId}">${this.cancelText}</div>` +
+      `<div class="hg-picker-btn" id="${this.okId}">${this.okText}</div>` +
       `<span id="${this.titleId}" >${this.title}</span> ` +
       `</div>`;
 
@@ -149,8 +151,8 @@ export default class ParaPicker {
     const container = $id(this.containerId);
     const content = $id(this.contentId);
     const box = $id(this.boxId);
-    const sureBtn = $id(this.sureId);
-    const cancelBtn = $id(this.abolishId);
+    const okBtn = $id(this.okId);
+    const cancelBtn = $id(this.cancelId);
     const len = content.children.length;
     // 设置高度
     if (obj.liHeight !== 40) {
@@ -169,14 +171,14 @@ export default class ParaPicker {
       box.style.lineHeight = `${this.btnHeight}px`;
     }
     if (obj.btnOffset) {
-      sureBtn.style.marginRight = obj.btnOffset;
+      okBtn.style.marginRight = obj.btnOffset;
       cancelBtn.style.marginLeft = obj.btnOffset;
     }
     if (obj.liHeight !== 40 || obj.btnHeight !== 44)
       container.style.height = `${this.liHeight * 5 + this.btnHeight}px`;
     // 设置配色
     if (obj.titleColor) box.style.color = obj.titleColor;
-    if (obj.sureColor) sureBtn.style.color = obj.sureColor;
+    if (obj.okColor) okBtn.style.color = obj.okColor;
     if (obj.cancelColor) cancelBtn.style.color = obj.cancelColor;
     if (obj.btnBgColor) box.style.backgroundColor = obj.btnBgColor;
     if (obj.contentColor) content.style.color = obj.contentColor;
@@ -361,10 +363,29 @@ export default class ParaPicker {
     this.container.classList.remove('hg-picker-container-up');
   }
   /**
-   * 设置选择器标题
+   * 设置选择器属性
    */
-  setTitle(text) {
-    this.title = text;
-    $id(this.titleId).innerHTML = this.title;
+  set(obj) {
+    for (let [key, value] of Object.entries(obj)) {
+      if (/^(title|cancelText|okText|valueKey|a|onOk|onCancel)$/.test(key)) {
+        this[key] = value
+        if (key === 'title') $id(this.titleId).innerHTML = value;
+        else if (key === 'okText') $id(this.okId).innerHTML = value;
+        else if (key === 'cancelText') $id(this.cancelId).innerHTML = value;
+      } else {
+        this[property][key] = value
+      }
+    }
+    return this
+  }
+  /**
+   * 获取选择器属性
+   */
+  get(key) {
+    if (/^(title|cancelText|okText|valueKey|a|onOk|onCancel)$/.test(key)) {
+      return this[key]
+    } else {
+      return this[property][key]
+    }
   }
 }

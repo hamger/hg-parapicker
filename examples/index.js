@@ -9,17 +9,19 @@ const picker = new ParaPicker({
   ],
   title: '玩家属性',
   // tabTitle: ['身份', '状态'],
-  cancel() {
+  onCancel() {
     console.log('取消选择');
   },
-  success(arr) {
+  onOk(arr) {
     console.log(arr);
-    document.getElementById(`para-input${this.playerNumber}`).innerHTML = arr;
+    document.getElementById(`para-input${this.get('playerNumber')}`).innerHTML = arr;
   },
 });
 
 window.select = number => {
-  picker.playerNumber = number;
-  picker.setTitle(`${number}号玩家`);
+  picker.set({
+    playerNumber: number,
+    title: `${number}号玩家`
+  });
   picker.show();
 };

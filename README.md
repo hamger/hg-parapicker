@@ -38,7 +38,7 @@
 ```js
 var paraPicker = new ParaPicker({
   data: data, // 符合格式的数组
-  success: function(arr) {
+  onOk: function(arr) {
     // 回调函数
     console.log(arr);
   }
@@ -84,42 +84,54 @@ var data = [
 
 ```html
 <head>
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/hg-parapicker/picker.css" />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://unpkg.com/hg-parapicker/picker.css"
+  />
 </head>
 <body>
-    <article class="wraper">
-        <div>
-            <h3 class="title">1号玩家</h3>
-            <div onclick="select(1)" class="inputDiv" id="para-input1"/>选择身份和状态</div>
-        </div>
-        <div>
-            <h3 class="title">2号玩家</h3>
-            <div onclick="select(2)" class="inputDiv" id="para-input2"/>选择身份和状态</div>
-        </div>
-    </article>
-    <script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
-    <script>
-      var picker = new ParaPicker({
-        data: [
-          ['平民', '狼人', '预言家', '女巫', '猎人', '白痴'],
-          ['存活', '死亡', '吃刀', '票出', '吃毒', '中枪'],
-        ],
-        title: '玩家属性',
-        cancel() {
-          console.log('取消选择');
-        },
-        success(arr) {
-          console.log(arr);
-          document.getElementById('para-input' + this.playerNumber).innerHTML = arr;
-        },
-      });
+  <article class="wraper">
+    <div>
+      <h3 class="title">1号玩家</h3>
+      <div onclick="select(1)" class="inputDiv" id="para-input1">
+        选择身份和状态
+      </div>
+    </div>
+    <div>
+      <h3 class="title">2号玩家</h3>
+      <div onclick="select(2)" class="inputDiv" id="para-input2">
+        选择身份和状态
+      </div>
+    </div>
+  </article>
+  <script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
+  <script>
+    var picker = new ParaPicker({
+      data: [
+        ["平民", "狼人", "预言家", "女巫", "猎人", "白痴"],
+        ["存活", "死亡", "吃刀", "票出", "吃毒", "中枪"]
+      ],
+      title: "玩家属性",
+      onCancel() {
+        console.log("取消选择");
+      },
+      onOk(arr) {
+        console.log(arr);
+        document.getElementById(
+          "para-input" + this.get("playerNumber")
+        ).innerHTML = arr;
+      }
+    });
 
-      function select(number) {
-        picker.playerNumber = number;
-        picker.setTitle(`${number}号玩家`);
-        picker.show();
-      };
-    </script>
+    function select(number) {
+      picker.set({
+        playerNumber: number,
+        title: `${number}号玩家`
+      });
+      picker.show();
+    }
+  </script>
 </body>
 ```
 
@@ -130,9 +142,9 @@ var data = [
 | key        | value          | description                                                                                    |
 | ---------- | -------------- | ---------------------------------------------------------------------------------------------- |
 | data       | Array\<Array\> | 符合格式的二维数组，必填                                                                       |
-| success    | Function       | 确定后的回调函数，返回一个结果数组，必填                                                       |
+| onOk       | Function       | 确定后的回调函数，返回一个结果数组，必填                                                       |
+| onCancel   | Function       | 点击取消按钮或者背景后的回调函数，选填                                                         |
 | valueKey   | String         | 需要展示的数据的键名，默认`value`                                                              |
-| cancel     | Function       | 点击取消按钮或者背景后的回调函数，选填                                                         |
 | title      | String         | 选择器标题，默认为空                                                                           |
 | sureText   | String         | 确定按钮文本，默认为“确定”                                                                     |
 | cancelText | String         | 取消按钮文本，默认为“取消”                                                                     |
@@ -147,7 +159,7 @@ var data = [
 | btnHeight       | Number | 按钮栏的高度（px），默认 `44`       |
 | btnOffset       | String | 按钮离边框的距离，默认 `20px`       |
 | titleColor      | String | 选择器标题的字体颜色                |
-| sureColor       | String | 选择器确定按钮的字体颜色            |
+| okColor         | String | 选择器确定按钮的字体颜色            |
 | cancelColor     | String | 选择器取消按钮的字体颜色            |
 | btnBgColor      | String | 选择器按钮栏的背景颜色              |
 | contentColor    | String | 选择器选择区域的文字颜色            |
@@ -158,11 +170,14 @@ var data = [
 
 ## 实例方法
 
-| function       | param          | description                        |
-| -------------- | -------------- | ---------------------------------- |
-| show()         | `--`           | 呼起选择框（受 forbidSelect 限制） |
-| hide()         | `--`           | 关闭选择框                         |
-| setTitle(text) | text: `String` | 修改标题内容                       |
+| function | param      | description    |
+| -------- | ---------- | -------------- |
+| show()   | `--`       | 呼起选择框     |
+| hide()   | `--`       | 关闭选择框     |
+| set(obj) | obj:Object | 设置选择器属性 |
+| get(key) | key:String | 获取选择框属性 |
+
+> 参数 obj 中指定`title` `cancelText` `okText` `valueKey` `a` `onOk` `onCancel`属性的值，会修改对应的选择器配置
 
 ## Change Log
 

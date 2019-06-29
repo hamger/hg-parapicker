@@ -22,7 +22,7 @@ const picker = new ParaPicker({
     btnLocation: 'bottom',
     btnOffset: '22px',
     titleColor: 'red',
-    sureColor: 'red',
+    okColor: 'red',
     cancelColor: 'red',
     btnBgColor: 'red',
     contentColor: 'red',
@@ -31,19 +31,17 @@ const picker = new ParaPicker({
     downShadowColor: 'red',
     lineColor: 'red',
   },
-  cancel() {
+  onCancel() {
     console.log('取消选择');
   },
-  success(arr) {
+  onOk(arr) {
     console.log(arr);
-    document.getElementById(`para-input${this.playerNumber}`).innerHTML = arr;
   },
 });
 const picker2 = new ParaPicker({
   data,
-  success(arr) {
+  onOk(arr) {
     console.log(arr);
-    document.getElementById(`para-input${this.playerNumber}`).innerHTML = arr;
   },
 });
 
@@ -57,8 +55,15 @@ describe('picker test', () => {
   it('picker', () => {
     picker.show();
     picker.hide();
-    picker.setTitle('1号玩家');
-    expect(picker.title).toBe('1号玩家');
+    picker.set({
+      playerNumber: 1,
+      title: '1号玩家',
+      cancelText: 'cancel',
+      okText: 'ok',
+    });
+    expect(picker.get('title')).toBe('1号玩家');
+    expect(picker.get('playerNumber')).toBe(1);
+    expect(picker.playerNumber).toBe(undefined);
   });
   it('picker2', () => {
     expect(picker2.getResult()).toEqual([

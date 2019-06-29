@@ -59,12 +59,12 @@
   <article class="wraper">
     <div>
       <h3 class="title">1号玩家</h3>
-      <div onclick="select(1)" class="inputDiv" id="para-input1" />选择身份和状态
+      <div onclick="select(1)" class="inputDiv" id="para-input1">选择身份和状态
     </div>
     </div>
     <div>
       <h3 class="title">2号玩家</h3>
-      <div onclick="select(2)" class="inputDiv" id="para-input2" />选择身份和状态
+      <div onclick="select(2)" class="inputDiv" id="para-input2">选择身份和状态
     </div>
     </div>
   </article>
@@ -76,18 +76,20 @@
         ['存活', '死亡', '吃刀', '票出', '吃毒', '中枪'],
       ],
       title: '玩家属性',
-      cancel() {
+      onCancel() {
         console.log('取消选择');
       },
-      success(arr) {
+      onOk(arr) {
         console.log(arr);
-        document.getElementById('para-input' + this.playerNumber).innerHTML = arr;
+        document.getElementById('para-input' + this.get('playerNumber')).innerHTML = arr;
       },
     });
 
     function select(number) {
-      picker.playerNumber = number;
-      picker.setTitle(`${number}号玩家`);
+      picker.set({
+        playerNumber: number,
+        title: `${number}号玩家`
+      });
       picker.show();
     };
   </script>
