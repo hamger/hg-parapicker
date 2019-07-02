@@ -2,7 +2,7 @@
 
 移动端的并列选择器，适用于选择并列类型的数据。
 
-> 1.x 版本已经停止维护，建议使用 [2.x 版本](https://github.com/hamger/hg-parapicker/tree/master)
+> 1.x 版本于 2019年7月29号 停止维护，推荐使用 [2.x 版本](https://github.com/hamger/hg-parapicker/tree/master)
 
 ## Demo
 
