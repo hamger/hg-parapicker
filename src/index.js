@@ -384,4 +384,10 @@ export default class ParaPicker {
       return this[property][key]
     }
   }
+  /**
+   * 销毁组件
+   */
+  destroy () {
+    $id(this.wrapId).remove()
+  }
 }

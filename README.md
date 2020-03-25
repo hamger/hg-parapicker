@@ -4,7 +4,7 @@
 ![NPM](https://img.shields.io/npm/l/hg-parapicker.svg?color=orange)
 [![npm](https://img.shields.io/npm/v/hg-parapicker.svg?color=blue)](https://www.npmjs.com/package/hg-parapicker)
 
-移动端的并列选择器，适用于选择并列类型的数据。
+移动端的并列选择器，适用于选择并列类型的数据。具有很好的适应性，可以在任何前端框架中使用。
 
 > 这里是 2.x 的文档，1.x 文档请点击[这里](https://github.com/hamger/hg-parapicker/tree/v1.x)。
 
@@ -22,35 +22,77 @@
 
 ## Usage
 
-首先引入文件
+### 在 vue 等框架中使用
 
-```html
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="https://unpkg.com/hg-parapicker/picker.css"
-/>
-<script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
-```
-
-实例化并列选择器`new ParaPicker(configuration)`
-
-```js
-var paraPicker = new ParaPicker({
-  data: data, // 符合格式的数组
-  onOk: function(arr) {
-    // 回调函数
-    console.log(arr);
-  }
-});
-```
-
-如果你使用构建工具，这样引入
-
-```js
+```vue
+<template>
+  <div @click="select">选择</div>
+</template>
+<script>
 import "hg-parapicker/picker.css";
 import ParaPicker from "hg-parapicker";
+
+export default {
+  data() {
+    return {
+      picker: null
+    };
+  },
+  methods: {
+    select() {
+      this.picker.show();
+    }
+  },
+  mounted() {
+    this.picker = new ParaPicker({
+      data: data,
+      onOk: function(arr) {
+        console.log(arr);
+      }
+    });
+  },
+  beforeDestroy() {
+    if (this.picker) {
+      this.picker.destroy();
+      this.picker = null;
+    }
+  }
+};
+</script>
 ```
+
+> 组件销毁时需要销毁 ParaPicker 实例，防止内存溢出
+
+> 如果数据是请求来的，实例化写在请求成功后的回调中
+
+### 在传统页面中使用
+
+```html
+<head>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://unpkg.com/hg-parapicker/picker.css"
+  />
+  <script src="https://unpkg.com/hg-parapicker/dist/hg-parapicker.js"></script>
+</head>
+<body>
+  <div onclick="select(1)">选择</div>
+  <script>
+    var picker = new ParaPicker({
+      data: data, // 符合格式的数组
+      onOk: function(arr) {
+        console.log(arr);
+      }
+    });
+    window.select = function(number) {
+      picker.show();
+    };
+  </script>
+</body>
+```
+
+### data 配置项的合法值
 
 `data`选项接受一个二维数组，数据格式如下
 
@@ -117,20 +159,25 @@ var data = [
 
 ## 实例方法
 
-| function | param      | description    |
-| -------- | ---------- | -------------- |
-| show()   | `--`       | 呼起选择框     |
-| hide()   | `--`       | 关闭选择框     |
-| set(obj) | obj:Object | 设置选择器属性 |
-| get(key) | key:String | 获取选择框属性 |
+| function  | param      | description    |
+| --------- | ---------- | -------------- |
+| show()    | `--`       | 呼起选择框     |
+| hide()    | `--`       | 关闭选择框     |
+| set(obj)  | obj:Object | 设置选择器属性 |
+| get(key)  | key:String | 获取选择框属性 |
+| destroy() | `--`       | 销毁选择器     |
 
 > 参数 obj 中指定`title`、`cancelText`、`okText`、`valueKey`、`a`、`onOk`、`onCancel`的值，会修改对应的选择器配置
 
 ## Change Log
 
+### 2020.3.25
+
+> v2.1.0 实现选择器销毁的实例方法
+
 ### 2019.6.29
 
-> v2.0.1 添加实例方法 set、get 
+> v2.0.1 添加实例方法 set、get
 
 ### 2019.5.3
 
